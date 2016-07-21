@@ -1,0 +1,23 @@
+function y = ac1_7(t, to)
+  y = (t >= to)
+end
+
+t = -2,4;
+x = u(t, 0);
+
+r = t .* u(t, 0);
+
+figure
+subplot(2,1,1)
+stem(t, x, 'linewidth', 2)
+xlabel('n')
+ylabel('u[n]')
+title('1.7 a')
+grid on
+
+subplot(2,1,2)
+stem(t, r, 'linewidth', 2)
+xlabel('n')
+ylabel('r[n]')
+title('1.7 b')
+grid on

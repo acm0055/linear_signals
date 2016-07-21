@@ -1,0 +1,145 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>time_reversed_problem_one</title><meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-01-19"><meta name="DC.source" content="time_reversed_problem_one.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%Copyright (c) 2016, Austin Chase Minor</span>
+<span class="comment">%All rights reserved.</span>
+<span class="comment">%</span>
+<span class="comment">%Redistribution and use in source and binary forms, with or without</span>
+<span class="comment">%modification, are permitted provided that the following conditions are met:</span>
+<span class="comment">%1. Redistributions of source code must retain the above copyright</span>
+<span class="comment">%   notice, this list of conditions and the following disclaimer.</span>
+<span class="comment">%2. Redistributions in binary form must reproduce the above copyright</span>
+<span class="comment">%   notice, this list of conditions and the following disclaimer in the</span>
+<span class="comment">%   documentation and/or other materials provided with the distribution.</span>
+<span class="comment">%3. All advertising materials mentioning features or use of this software</span>
+<span class="comment">%   must display the following acknowledgement:</span>
+<span class="comment">%   This product includes software developed by Austin Minor.</span>
+<span class="comment">%4. Neither the name of Austin Minor nor the</span>
+<span class="comment">%   names of its contributors may be used to endorse or promote products</span>
+<span class="comment">%   derived from this software without specific prior written permission.%</span>
+<span class="comment">%</span>
+<span class="comment">%THIS SOFTWARE IS PROVIDED BY Austin Minor ''AS IS'' AND ANY</span>
+<span class="comment">%EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span>
+<span class="comment">%WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span>
+<span class="comment">%DISCLAIMED. IN NO EVENT SHALL Austin Minor BE LIABLE FOR ANY</span>
+<span class="comment">%DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span>
+<span class="comment">%(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
+<span class="comment">%LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span>
+<span class="comment">%ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="comment">%(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS</span>
+<span class="comment">%SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="comment">%</span>
+<span class="comment">%Author: Austin Minor</span>
+<span class="comment">%Version: 1/16/16</span>
+
+<span class="keyword">function</span> y = time_reversed_problem_one(t)
+<span class="comment">%Functional object for the mathematical function</span>
+<span class="comment">%y(-t) = -t[u(-t)-u(-t-2)]+2u(-t-2)</span>
+
+y = -t .* (t &lt; 0) + (2 + t) .* (t &lt;-2);
+</pre><pre class="codeoutput">Error using time_reversed_problem_one (line 36)
+Not enough input arguments.
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Copyright (c) 2016, Austin Chase Minor
+%All rights reserved.
+%
+%Redistribution and use in source and binary forms, with or without
+%modification, are permitted provided that the following conditions are met:
+%1. Redistributions of source code must retain the above copyright
+%   notice, this list of conditions and the following disclaimer.
+%2. Redistributions in binary form must reproduce the above copyright
+%   notice, this list of conditions and the following disclaimer in the
+%   documentation and/or other materials provided with the distribution.
+%3. All advertising materials mentioning features or use of this software
+%   must display the following acknowledgement:
+%   This product includes software developed by Austin Minor.
+%4. Neither the name of Austin Minor nor the
+%   names of its contributors may be used to endorse or promote products
+%   derived from this software without specific prior written permission.%
+%
+%THIS SOFTWARE IS PROVIDED BY Austin Minor ''AS IS'' AND ANY
+%EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+%WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+%DISCLAIMED. IN NO EVENT SHALL Austin Minor BE LIABLE FOR ANY
+%DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+%(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+%LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+%ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+%(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+%SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+%
+%Author: Austin Minor
+%Version: 1/16/16
+
+function y = time_reversed_problem_one(t)
+%Functional object for the mathematical function
+%y(-t) = -t[u(-t)-u(-t-2)]+2u(-t-2)
+
+y = -t .* (t < 0) + (2 + t) .* (t <-2);
+##### SOURCE END #####
+--></body></html>
